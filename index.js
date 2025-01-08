@@ -1,15 +1,23 @@
-const express = require('express');
-const { resolve } = require('path');
+const express = require("express");
+const { resolve } = require("path");
 
 const app = express();
-const port = 3010;
+const port = process.env.PORT || 8000;
 
-app.use(express.static('static'));
+const connect = require("./database");
+const routes = require("./routs");
 
-app.get('/', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/index.html'));
+app.use(express.static("static"));
+require("dotenv").config();
+
+
+app.get("/", (req, res) => {
+  res.sendFile(resolve(__dirname, "pages/index.html"));
 });
 
+app.use("/api", routes);
+
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  connect();
+  console.log(`server started at http://localhost:${port}`);
 });
