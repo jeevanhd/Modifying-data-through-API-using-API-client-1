@@ -19,6 +19,7 @@ router.post("/menu", async (req, res) => {
 
     res.status(201).json({ message: "Menu item added", data: newItem });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal server error", error: error });
   }
 });
